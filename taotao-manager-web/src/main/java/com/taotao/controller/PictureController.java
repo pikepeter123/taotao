@@ -20,8 +20,8 @@ import java.util.Map;
 @RequestMapping(value = "/pic")
 public class PictureController {
 
-    @Value(value = "${IMAGE_SERVER_URL}")
-    private String IMAGE_SERVER_URL;
+//    @Value(value = "${IMAGE_SERVER_URL}")
+    private String IMAGE_SERVER_URL = "http://192.168.25.133/";
 
     /**
      * 图片上传的方法
