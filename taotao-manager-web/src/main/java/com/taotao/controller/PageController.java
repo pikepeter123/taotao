@@ -20,4 +20,5 @@ public class PageController {
     public String showPage(@PathVariable("page") String page) {
         return page;
     }
+
 }

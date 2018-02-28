@@ -76,4 +76,73 @@ public class ItemServiceImpl implements ItemService {
         itemDesc.setItemDesc(description);
         return null;
     }
+
+    @Override
+    public TaoTaoResult deleteItem(TbItem tbItem) {
+        itemMapper.deleteByPrimaryKey(tbItem.getId());
+        TaoTaoResult result = new TaoTaoResult();
+        result.setStatus(200);
+        return result;
+    }
+
+    /**
+     * 更新商品的业务层方法
+     *
+     * @param tbItem 待更新的商品
+     * @return 更新结果
+     */
+    @Override
+    public TaoTaoResult updateItem(TbItem tbItem) {
+//        首先根据商品的id查出数据库中的记录
+        TbItem persistentTbItem = itemMapper.selectByPrimaryKey(tbItem.getId());
+//        根据persistentTbItem补全tbItem的属性
+//        补全商品状态
+        if (tbItem.getStatus() == null) {
+            tbItem.setStatus(persistentTbItem.getStatus());
+        }
+//        补全商品的创建日期
+        tbItem.setCreated(persistentTbItem.getCreated());
+//        设置更新日期
+        tbItem.setUpdated(new Date());
+//        执行更新
+        itemMapper.updateByPrimaryKey(tbItem);
+//        构造操作结果对象
+        TaoTaoResult result = new TaoTaoResult();
+//        设置更新成功的状态码
+        result.setStatus(200);
+        return result;
+    }
+
+    @Override
+    public TaoTaoResult instockItems(Long[] ids) {
+        for (Long id : ids) {
+//            根据id查询持久态对象
+            TbItem persistentItem = itemMapper.selectByPrimaryKey(id);
+//            更新状态为2下架
+            persistentItem.setStatus((byte) 2);
+//            更新操作事件updateDate
+            persistentItem.setUpdated(new Date());
+            itemMapper.updateByPrimaryKey(persistentItem);
+        }
+        TaoTaoResult result = new TaoTaoResult();
+        result.setStatus(200);
+        return result;
+    }
+
+    @Override
+    public TaoTaoResult reshelfItems(Long[] ids) {
+        for (Long id : ids) {
+//            根据id查询持久态对象
+            TbItem persistentItem = itemMapper.selectByPrimaryKey(id);
+//            更新状态为2上架
+            persistentItem.setStatus((byte) 1);
+//            更新操作事件updateDate
+            persistentItem.setUpdated(new Date());
+            itemMapper.updateByPrimaryKey(persistentItem);
+        }
+        TaoTaoResult result = new TaoTaoResult();
+        result.setStatus(200);
+        return result;
+    }
+
 }

@@ -31,7 +31,42 @@ public class ItemController {
     @RequestMapping(value = "/save")
     @ResponseBody
     public TaoTaoResult saveItem(TbItem tbItem, @RequestParam(value = "desc") String description) {
-        TaoTaoResult result = itemService.addItem(tbItem, description);
-        return result;
+        return itemService.addItem(tbItem, description);
+    }
+
+    /**
+     * 删除商品（未测试）
+     *
+     * @param tbItem 待删除的商品
+     * @return 操作的结果
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public TaoTaoResult deleteItem(TbItem tbItem) {
+        return itemService.deleteItem(tbItem);
+    }
+
+    /**
+     * 更新商品
+     *
+     * @param tbItem 待更新的商品
+     * @return 更新结果
+     */
+    @RequestMapping(value = "/update")
+    @ResponseBody
+    public TaoTaoResult updateItem(TbItem tbItem) {
+        return itemService.updateItem(tbItem);
+    }
+
+    @RequestMapping(value = "/instock")
+    @ResponseBody
+    public TaoTaoResult instockItem(Long[] ids) {
+        return itemService.instockItems(ids);
+    }
+
+    @RequestMapping(value = "/reshelf")
+    @ResponseBody
+    public TaoTaoResult reshelfItem(Long[] ids) {
+        return itemService.reshelfItems(ids);
     }
 }
