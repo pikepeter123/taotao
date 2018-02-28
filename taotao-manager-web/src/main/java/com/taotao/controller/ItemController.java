@@ -58,12 +58,24 @@ public class ItemController {
         return itemService.updateItem(tbItem);
     }
 
+    /**
+     * 下架商品
+     *
+     * @param ids 待下架商品id的数组
+     * @return 操作结果
+     */
     @RequestMapping(value = "/instock")
     @ResponseBody
     public TaoTaoResult instockItem(Long[] ids) {
         return itemService.instockItems(ids);
     }
 
+    /**
+     * 上架商品
+     *
+     * @param ids 待上架商品id的数组
+     * @return 操作结果
+     */
     @RequestMapping(value = "/reshelf")
     @ResponseBody
     public TaoTaoResult reshelfItem(Long[] ids) {
