@@ -5,4 +5,5 @@
     <import resource="applicationContext-dao.xml"/>
     <import resource="applicationContext-service.xml"/>
     <import resource="applicationContext-trans.xml"/>
+    <import resource="applicationContext-redis.xml"/>
 </beans>

@@ -10,10 +10,17 @@
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
+    <!--引入外部配置文件，resources.properties主要是存了图片服务器的地址-->
+    <context:property-placeholder location="classpath:resources.properties"/>
+
+    <!--配置包扫描-->
     <context:component-scan base-package="com.taotao.controller"/>
+
+    <!--注解驱动模式-->
     <mvc:annotation-driven/>
-    <bean
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
@@ -36,4 +43,6 @@
     <dubbo:registry protocol="zookeeper" address="192.168.25.128:2181"/>
     <dubbo:reference interface="com.taotao.service.ItemService" id="itemService"/>
     <dubbo:reference interface="com.taotao.service.ItemCatService" id="itemCatService"/>
+    <dubbo:reference interface="com.taotao.service.ContentCategoryService" id="contentCategoryService"/>
+    <dubbo:reference interface="com.taotao.service.ContentService" id="contentService"/>
 </beans>
