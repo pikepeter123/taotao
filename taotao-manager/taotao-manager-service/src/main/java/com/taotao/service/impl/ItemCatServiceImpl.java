@@ -16,6 +16,7 @@ import java.util.List;
  * description: 商品类目业务层实现类
  */
 @Service
+@SuppressWarnings("all")
 public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
@@ -32,12 +33,14 @@ public class ItemCatServiceImpl implements ItemCatService {
 //        根据父节点id查询子节点列表
         TbItemCatExample example = new TbItemCatExample();
         TbItemCatExample.Criteria criteria = example.createCriteria();
+//        条件是父节点是前台传过来的节点的id
         criteria.andParentIdEqualTo(parentId);
 //        执行查询
         List<TbItemCat> list = itemCatMapper.selectByExample(example);
 //        转换成EasyUITreeNode列表
         ArrayList<EasyUITreeNode> resultList = new ArrayList<>();
         for (TbItemCat tbItemCat : list) {
+//            构造前台节点对象
             EasyUITreeNode node = new EasyUITreeNode();
             node.setId(tbItemCat.getId());
             node.setText(tbItemCat.getName());

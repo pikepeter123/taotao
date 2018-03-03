@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by 31364 on 2018/2/27.
- * description:
+ * description: 前台数据表格分页需要的pojo类
  */
 public class EasyUIDataGridResult implements Serializable {
 

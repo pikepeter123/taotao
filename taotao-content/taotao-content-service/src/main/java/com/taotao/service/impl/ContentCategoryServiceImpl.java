@@ -133,11 +133,14 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 //        删除自己
         contentCategoryMapper.deleteByPrimaryKey(tbContentCategory.getId());
 //        构造操作结果对象
-        TaoTaoResult result = new TaoTaoResult();
-        result.setStatus(200);
-        return result;
+        return TaoTaoResult.ok();
     }
 
+    /**
+     * 递归删除的方法
+     *
+     * @param tbContentCategory 最上层的节点
+     */
     private void queryAndRecursionDelete(TbContentCategory tbContentCategory) {
         TbContentCategoryExample example = new TbContentCategoryExample();
 //        构造条件查询对象

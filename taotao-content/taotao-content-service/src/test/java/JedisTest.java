@@ -26,15 +26,21 @@ public class JedisTest {
 
     @Test
     public void testJedisSingle() throws Exception {
-        Jedis jedis = new Jedis("192.168.25.129", 6379);
+        Jedis jedis = new Jedis("192.168.25.128", 6379);
         jedis.set("hello", "123");
         Thread.sleep(10000);
         System.out.println(jedis.get("hello"));
     }
 
     @Test
+    public void test1() throws Exception {
+        Jedis jedis = new Jedis("192.168.25.128", 6379);
+        System.out.println(jedis.get("hello"));
+    }
+
+    @Test
     public void testJedisPool() throws Exception {
-        JedisPool jedisPool = new JedisPool("192.168.25.129", 6379);
+        JedisPool jedisPool = new JedisPool("192.168.25.128", 6379);
         Jedis jedis = jedisPool.getResource();
 //        jedis.expire("hello", -1);
         System.out.println(jedis.get("hello"));
@@ -45,12 +51,12 @@ public class JedisTest {
     @Test
     public void testJedisCluster() throws Exception {
         Set<HostAndPort> nodes = new HashSet<>();
-        nodes.add(new HostAndPort("192.168.25.129", 7001));
-        nodes.add(new HostAndPort("192.168.25.129", 7002));
-        nodes.add(new HostAndPort("192.168.25.129", 7003));
-        nodes.add(new HostAndPort("192.168.25.129", 7004));
-        nodes.add(new HostAndPort("192.168.25.129", 7005));
-        nodes.add(new HostAndPort("192.168.25.129", 7006));
+        nodes.add(new HostAndPort("192.168.25.128", 7001));
+        nodes.add(new HostAndPort("192.168.25.128", 7002));
+        nodes.add(new HostAndPort("192.168.25.128", 7003));
+        nodes.add(new HostAndPort("192.168.25.128", 7004));
+        nodes.add(new HostAndPort("192.168.25.128", 7005));
+        nodes.add(new HostAndPort("192.168.25.128", 7006));
 //        在系统中可以是单例的
         JedisCluster jedisCluster = new JedisCluster(nodes);
         jedisCluster.set("hello", "123456");

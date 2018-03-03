@@ -132,9 +132,6 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.taotao.pojo.TbContent">
-        <selectKey keyProperty="id" order="AFTER">
-            SELECT last_insert_id();
-        </selectKey>
         INSERT INTO tb_content (id, category_id, title,
         sub_title, title_desc, url,
         pic, pic2, created,
