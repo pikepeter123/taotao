@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/taotao-search.iml" filepath="$PROJECT_DIR$/taotao-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taotao-search-interface/taotao-search-interface.iml" filepath="$PROJECT_DIR$/taotao-search-interface/taotao-search-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taotao-search-service/taotao-search-service.iml" filepath="$PROJECT_DIR$/taotao-search-service/taotao-search-service.iml" />
+    </modules>
+  </component>
+</project>
