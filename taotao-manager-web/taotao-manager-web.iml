@@ -105,5 +105,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="taotao-search-interface" />
   </component>
 </module>

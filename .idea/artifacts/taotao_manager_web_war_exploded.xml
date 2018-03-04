@@ -69,6 +69,9 @@
           <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:0.9" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.32" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.9" />
+          <element id="archive" name="taotao-search-interface-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="taotao-search-interface" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">

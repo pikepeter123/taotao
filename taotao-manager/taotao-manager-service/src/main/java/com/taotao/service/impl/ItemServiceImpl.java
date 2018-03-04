@@ -5,14 +5,19 @@ import com.github.pagehelper.PageInfo;
 import com.taotao.common.pojo.EasyUIDataGridResult;
 import com.taotao.common.pojo.TaoTaoResult;
 import com.taotao.common.utils.IDUtils;
+import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
 import com.taotao.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.jms.*;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +30,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapper itemMapper;
+
+    @Autowired
+    private TbItemDescMapper tbItemDescMapper;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @Resource(name = "topicDestination")
+    private Destination topicDestination;
 
     /**
      * 分页查询所有数据的方法
@@ -57,9 +71,9 @@ public class ItemServiceImpl implements ItemService {
      * @return 添加结果
      */
     @Override
-    public TaoTaoResult addItem(TbItem item, String description) {
+    public TaoTaoResult addItem(final TbItem item, String description) {
 //        生成商品id
-        long itemId = IDUtils.genItemId();
+        final long itemId = IDUtils.genItemId();
 //        补全TbItem对象的属性
         item.setId(itemId);
 //        商品状态1-正常，2-下架，3-删除
@@ -69,12 +83,23 @@ public class ItemServiceImpl implements ItemService {
         item.setUpdated(date);
 //        向商品表中插入数据
         itemMapper.insert(item);
-//        创建一个TbItemDesc对象
+        //商品描述
         TbItemDesc itemDesc = new TbItemDesc();
-//        补全TbItemDesc的属性
         itemDesc.setItemId(itemId);
         itemDesc.setItemDesc(description);
-        return null;
+        itemDesc.setCreated(date);
+        itemDesc.setUpdated(date);
+        //插入商品描述
+        tbItemDescMapper.insert(itemDesc);
+//        商品添加完成后发送mq消息
+        jmsTemplate.send(topicDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                TextMessage message = session.createTextMessage(itemId + "");
+                return message;
+            }
+        });
+        return TaoTaoResult.ok();
     }
 
     @Override
